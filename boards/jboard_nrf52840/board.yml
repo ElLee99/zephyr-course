@@ -1,0 +1,9 @@
+board:
+  name: jboard
+  full_name: Johan Custom Board nRF52840
+  vendor: Johan
+  socs:
+  # Physical nRF52840 SoC on PCA10056
+  - name: nrf52840
+  # nRF52840 SoC in nRF52811 emulation mode on PCA10056
+  - name: nrf52811
