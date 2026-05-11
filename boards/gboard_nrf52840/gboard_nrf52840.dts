@@ -1,0 +1,23 @@
+/dts-v1/;
+#include <nordic/nrf52840_qiaa.dtsi>
+#include <nordic/nrf52840_partition.dtsi>
+#include "gboard_nrf52840-pinctrl.dtsi"
+
+
+/ {
+	model = "Garcia Custom Board nRF52840";
+	compatible = "garcia,gboard";
+
+    chosen {
+		zephyr,console = &uart0;
+    };
+};
+
+&uart0 {
+	compatible = "nordic,nrf-uarte";
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-1 = <&uart0_sleep>;
+	pinctrl-names = "default", "sleep";
+};

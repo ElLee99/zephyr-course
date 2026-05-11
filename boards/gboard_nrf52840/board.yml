@@ -1,0 +1,6 @@
+board:
+  name: gboard
+  full_name: Garcia Custom Board nRF52840
+  vendor: Garcia
+  socs:
+  - name: nrf52840
