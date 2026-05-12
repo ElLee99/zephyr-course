@@ -1,5 +1,25 @@
 /{
-    aliases {
-        app-led = &led0;
+    led_sensor0: led_sensor_0 {
+        compatible = "johan,led-sensor";
+        led-gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
+        status = "okay";
+    };
+
+    led_sensor1: led_sensor_1 {
+        compatible = "johan,led-sensor";
+        led-gpios = <&gpio0 14 GPIO_ACTIVE_LOW>;
+        status = "okay";
+    };
+
+    led_sensor2: led_sensor_2 {
+        compatible = "johan,led-sensor";
+        led-gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
+        status = "okay";
+    };
+
+    led_sensor3: led_sensor_3 {
+        compatible = "johan,led-sensor";
+        led-gpios = <&gpio0 16 GPIO_ACTIVE_LOW>;
+        status = "okay";
     };
 };

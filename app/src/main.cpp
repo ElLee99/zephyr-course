@@ -1,30 +1,40 @@
-#include <zephyr/drivers/gpio.h>
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
+#include <zephyr/device.h>
+#include <zephyr/drivers/sensor.h>
 
-//#define SLEEP_TIME_MS 1000
-
-/* The devicetree node identifier for the "app_led" alias. */
-#define LED_NODE DT_ALIAS(app_led)
-
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED_NODE, gpios);
-
-LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
-
-int main(void)
+int main (void)
 {
-    bool led_state = true;
+    const struct device *led0 = DEVICE_DT_GET(DT_NODELABEL(led_sensor0));
+    const struct device *led1 = DEVICE_DT_GET(DT_NODELABEL(led_sensor1));
+    const struct device *led2 = DEVICE_DT_GET(DT_NODELABEL(led_sensor2));
+    const struct device *led3 = DEVICE_DT_GET(DT_NODELABEL(led_sensor3));
 
-    if (!gpio_is_ready_dt(&led)) return 0;
+    struct sensor_value val;
 
-    if (gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE) < 0) return 0;
-
-    while (1) {
-        if (gpio_pin_toggle_dt(&led) < 0) return 0;
-
-        led_state = !led_state;
-        LOG_INF("LED state: %s", led_state ? "ON" : "OFF");
-        k_msleep(CONFIG_APP_HEARTBEAT_PERIOD_MS);
+    if (!device_is_ready(led0)
+        || !device_is_ready(led1)
+        || !device_is_ready(led2)
+        || !device_is_ready(led3)) 
+    {
+        return -1;
     }
+
+    while (1)
+    {
+        sensor_sample_fetch(led0);
+        sensor_sample_fetch(led1);
+        sensor_sample_fetch(led2);
+        sensor_sample_fetch(led3);
+
+        k_msleep(500);
+
+        sensor_channel_get(led0, SENSOR_CHAN_ALL, &val);
+        sensor_channel_get(led1, SENSOR_CHAN_ALL, &val);
+        sensor_channel_get(led2, SENSOR_CHAN_ALL, &val);
+        sensor_channel_get(led3, SENSOR_CHAN_ALL, &val);
+
+        k_msleep(500);
+    }
+
     return 0;
 }
