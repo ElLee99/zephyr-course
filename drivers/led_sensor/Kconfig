@@ -1,0 +1,4 @@
+menuconfig LED_SENSOR
+    bool "LED Sensor Driver"
+    default y
+    depends on GPIO
