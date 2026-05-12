@@ -20,6 +20,7 @@ struct led_sensor_config {
 
 struct led_sensor_data {
     bool state;
+    bool led_enabled;
 };
 
 static const struct sensor_driver_api led_api =
@@ -73,6 +74,14 @@ static int led_sensor_channel_get (const struct device *dev,
     return 0;
 }
 
+int led_sensor_enable (const struct device *dev, bool led_enabled)
+{
+    struct led_sensor_data *data = dev->data;
+
+    data->led_enabled = led_enabled;
+
+    return 0;
+}
 
 
 

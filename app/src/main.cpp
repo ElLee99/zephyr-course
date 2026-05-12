@@ -1,6 +1,7 @@
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/sensor.h>
+#include "led_sensor.h"
 
 int main (void)
 {
@@ -26,6 +27,11 @@ int main (void)
         sensor_sample_fetch(led2);
         sensor_sample_fetch(led3);
 
+        led_sensor_enable(led0, false);
+        led_sensor_enable(led1, false);
+        led_sensor_enable(led2, false);
+        led_sensor_enable(led3, false);
+
         k_msleep(500);
 
         sensor_channel_get(led0, SENSOR_CHAN_ALL, &val);
@@ -33,7 +39,14 @@ int main (void)
         sensor_channel_get(led2, SENSOR_CHAN_ALL, &val);
         sensor_channel_get(led3, SENSOR_CHAN_ALL, &val);
 
+        led_sensor_enable(led0, false);
+        led_sensor_enable(led1, false);
+        led_sensor_enable(led2, false);
+        led_sensor_enable(led3, false);
+
         k_msleep(500);
+
+        
     }
 
     return 0;
