@@ -2,6 +2,7 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/shell/shell.h>
+#include "led_sensor.h"
 
 
 
@@ -48,6 +49,32 @@ static int cmd_info (const struct shell *sh, size_t argc, char **argv)
     return 0;
 }
 
+static int cmd_set (const struct shell *sh, size_t argc, char **argv)
+{
+    int value;
+
+    value = atoi(argv[1]);
+
+    if (value != 0 && value != 1) 
+    {
+        shell_error(sh, "Use 0 or 1");
+        return -EINVAL;
+    }
+
+    led_sensor_enable(led0, value);
+
+    if (value == 1)
+    {
+        shell_print(sh, "LED sensor enabled");
+    }
+    else
+    {
+        shell_print(sh, "LED sensor disabled");
+    }
+
+    return 0;
+}
+
 SHELL_STATIC_SUBCMD_SET_CREATE(
     sensor_cmds,
 
@@ -65,6 +92,13 @@ SHELL_STATIC_SUBCMD_SET_CREATE(
               NULL,
               "Get sensor info",
               cmd_info),
+
+    SHELL_CMD_ARG(set,
+                  NULL,
+                  "Enable/disable sensor: sensor set 0 or 1",
+                  cmd_set,
+                  2,
+                  0),          
 
     SHELL_SUBCMD_SET_END
 );
