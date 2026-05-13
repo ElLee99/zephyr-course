@@ -22,7 +22,7 @@ int main (void)
 
     while (1)
     {
-        sensor_sample_fetch(led0);
+        /*sensor_sample_fetch(led0);
         sensor_sample_fetch(led1);
         sensor_sample_fetch(led2);
         sensor_sample_fetch(led3);
@@ -42,7 +42,7 @@ int main (void)
         led_sensor_enable(led0, false);
         led_sensor_enable(led1, false);
         led_sensor_enable(led2, false);
-        led_sensor_enable(led3, false);
+        led_sensor_enable(led3, false);*/
 
         k_msleep(500);
 
